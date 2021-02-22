@@ -14,10 +14,14 @@ class CreateExternalAuthTable extends Migration
     public function up()
     {
         Schema::create('external_auth', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('id');
             $table->foreign('id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('provider');
             $table->string('provider_id');
+            $table->primary( array( 'id', 'provider' ) );
+            $table->unique(['id', 'provider']);
+            $table->string('name', 255)->nullable();
+            $table->string('avatar', 255)->nullable();
             $table->timestamps();
         });
     }
