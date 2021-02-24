@@ -2,6 +2,7 @@
 
 namespace App\Actions\Fortify;
 
+use App\Models\ExternalAuthUser;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -32,6 +33,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
+            $deletedRows = ExternalAuthUser::where('id', $user->id)->delete();
         } else {
             $user->forceFill([
                 'name' => $input['name'],
