@@ -20,8 +20,6 @@ class CreateExternalAuthTable extends Migration
             $table->string('provider_id');
             $table->primary( array( 'id', 'provider' ) );
             $table->unique(['id', 'provider']);
-            $table->string('name', 255)->nullable();
-            $table->string('avatar', 255)->nullable();
             $table->timestamps();
         });
     }
